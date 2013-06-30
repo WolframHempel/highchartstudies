@@ -6,8 +6,66 @@ html, body{
 	height: 100%;
 }
 
+.addSma{
+	margin: 15px 0;
+	padding-bottom: 20px;
+	font-size: 23px;
+	cursor: pointer;
+	color: #666;
+	-webkit-transition: color 300ms ease;
+	border-bottom: 1px solid #666;
+}
+
+.addSma span{
+	color: orange;
+	font-size: 40px;
+}
+
+.addSma em{
+	position: relative;
+	top: -5px;
+	left: 10px;
+	font-style: normal;
+}
+
+.addSma:hover{
+	color: orange;
+}
+
 li.sma{
 	position: relative;
+	list-style-type: none;
+	border-bottom: 1px solid #ccc;
+	padding-top: 15px;
+}
+
+li.sma input{
+	width: 20px;
+}
+
+li.sma div.name{
+	float: left;
+	margin: 5px 20px 0 0;
+	font-size: 16px;
+}
+li.sma div.controls{
+	float: left;
+}
+
+li.sma div.controls > *
+{
+	margin-right: 12px;
+}
+
+li.sma div.controls .switch
+{
+	font-size: 20px;
+	cursor: pointer;
+	-webkit-transition: color 300ms ease;
+}
+
+li.sma div.controls .switch:hover{
+	color: orange;
 }
 
 li.sma .dropdown-menu{
@@ -29,8 +87,12 @@ li.sma .dropdown-menu li:hover{
 }
 
 li.sma div.colorSelect{
-	width: 20px;
-	height: 20px;
+	width: 23px;
+	height: 23px;
 	float: left;
 	cursor: pointer;
+	border: 2px solid #fff;
+	margin: 2px 10px 0 0;
+	outline: 1px solid #ccc;
+	margin-right: 15px;
 }

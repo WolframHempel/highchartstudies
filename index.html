@@ -37,6 +37,7 @@
 		<!-- Twitter Bootstrap and theme -->
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" media="screen" />
 
 		<link rel="stylesheet" type="text/css" href="css/screen.css" media="screen" />
 
@@ -45,32 +46,37 @@
 		<div class="row-fluid fullHeight">
 			<div id="chartContainer" class="span9 fullHeight"></div>
 			<div id="controlContainer" class="span3 fullHeight">
+				<div class="addSma" data-bind="click:addSma">
+					<span class="icon-plus-sign"></span>
+					<em>Add Simple Moving Average</em>
+				</div>
 				<ul  data-bind="foreach: simpleMovingAverages">
-					<li class="sma">
-						<div data-bind="text:name"></div>
-						<input type="text" data-bind="value:period" />
-						<div class="colorSelect" data-bind="
-						 		attr:{ title:colorName }, 
-						 		style:{ backgroundColor: colorCode },
-						 		click: toggleColorDropdown
-						 ">
-							 <ul class="dropdown-menu" data-bind="visible: colorDropdownVisible, foreach: colors" role="menu" aria-labelledby="dLabel">
-							 	<li data-bind="
-							 		attr:{ title:name },
-							 		style:{ backgroundColor: code },
-							 		click: $parent.setColor.bind( $parent, $data )
-							 	"></li>
-							</ul>
+					<li class="sma clearfix">
+						<div class="name">Simple moving average( <strong data-bind="text:period"></strong> )</div>
+						<div class="controls">
+							<input type="text" data-bind="value:period" />
+							<div class="colorSelect" data-bind="
+							 		attr:{ title:colorName }, 
+							 		style:{ backgroundColor: colorCode },
+							 		click: toggleColorDropdown
+							 ">
+								 <ul class="dropdown-menu" data-bind="visible: colorDropdownVisible, foreach: colors" role="menu" aria-labelledby="dLabel">
+								 	<li data-bind="
+								 		attr:{ title:name },
+								 		style:{ backgroundColor: code },
+								 		click: $parent.setColor.bind( $parent, $data )
+								 	"></li>
+								</ul>
+							</div>
+							<div class="switch" data-bind="
+								css:{ 'icon-eye-open': visible(), 'icon-eye-close': !visible() }, 
+								click: toggleVisible
+							"></div>
+							<div data-bind="click:destroy" class="icon-remove switch"></div>
 						</div>
-						<div data-bind="
-							css:{ 'icon-eye-open': visible(), 'icon-eye-close': !visible() }, 
-							click: toggleVisible
-						"></div>
-						<div data-bind="click:destroy" class="icon-remove"></div>
 
 					</li>
 				</ul>
-				<button class="btn primary" data-bind="click:addSma">Add Simple Moving Average</button>
 			</div>
 		</div>
 	</body>
