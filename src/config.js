@@ -29,15 +29,22 @@ CHART_CONFIG =
 		name: 'AAPL',
 		data: null,
 		dataGrouping: {
-			units: null
+			units: [
+				[ 'week', [1] ],
+				[ 'month', [1, 2, 3, 4, 6] ]
+			]
 		}
-	}, {
+	},
+	{
 		type: 'column',
 		name: 'Volume',
 		data: null,
 		yAxis: 1,
 		dataGrouping: {
-			units: null
+			units: [
+				[ 'week', [1] ],
+				[ 'month', [1, 2, 3, 4, 6] ]
+			]
 		}
 	}]
 };
