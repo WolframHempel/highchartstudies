@@ -80,11 +80,6 @@ SmaViewModel.prototype.setColor = function( mColor )
 	this._oSeries.update( this._oSeries.options );
 };
 
-SmaViewModel.prototype.remove = function()
-{
-
-};
-
 SmaViewModel.prototype._getName = function()
 {
 	return "Simple Moving Average (" + this.period() + ")";
@@ -92,21 +87,6 @@ SmaViewModel.prototype._getName = function()
 
 SmaViewModel.prototype._getData = function()
 {
-	
-
 	var pOpenSma = calc.simpleMovingAverage( this._oControlViewModel.getOpenSeries(), parseInt( this.period(), 10 ) );
-
-	for( var i = 0; i < pOpenSma.length; i++ )
-	{
-		if( isNaN( pOpenSma[ i ] )  )
-		{
-			console.log( i, pOpenSma[i] );
-		}
-	}
-
-	var data = calc.merge( this._oControlViewModel.getTimestamps(), pOpenSma );
-
-
-
-	return data;
+	return calc.merge( this._oControlViewModel.getTimestamps(), pOpenSma );
 };

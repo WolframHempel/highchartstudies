@@ -1,34 +1,38 @@
 var calc = {};
+
 /**
-* Reads the raw data (as provided by Highcharts) and turns it into
-* something that Highcharts can understand
+* Takes a two-dimensional array and a number of column
+* indices and returns a two dimensional array with a subset
+* of the original array's columns
 */
-calc.transformData = function( pData )
+calc.reduceColumns = function( pArray, pColumIndices )
 {
-
-	// split the data set into ohlc and volume
-	var pOHLC = [],
-		pVolume = [],
-		nDataLength = pData.length,
-		i;
-
-	for( i = 0; i < nDataLength; i++ )
+	var fMapping = function( pEntry )
 	{
-		pOHLC.push([
-			pData[ i ][ 0 ], // the date
-			pData[ i ][ 1 ], // open
-			pData[ i ][ 2 ], // high
-			pData[ i ][ 3 ], // low
-			pData[ i ][ 4 ] // close
-		]);
+		var i, pReturn = [];
 
-		pVolume.push([
-			pData[ i ][ 0 ], // the date
-			pData[ i ][ 5 ] // the volume
-		]);
-	}
+		for( i = 0; i < pColumIndices.length; i++ )
+		{
+			pReturn.push( pEntry[ pColumIndices[ i ] ] );
+		}
 
-	return { ohlc: pOHLC, volume: pVolume };
+		return pReturn;
+	};
+
+	return pArray.map( fMapping );
+};
+
+/**
+* Retuns the sum of the values in the array
+*/
+calc.sum = function( pArray )
+{
+	var fReduce = function( nPrevious, nCurrent )
+	{
+		return nPrevious + nCurrent;
+	};
+
+	return pArray.reduce( fReduce, 0 );
 };
 
 /**
@@ -97,7 +101,7 @@ calc.padArray = function( pArray, vValue, nLength )
 */
 calc.simpleMovingAverage = function( pData, nPeriod )
 {
-	var nSum = pData.slice( 0, nPeriod ).reduce( function( nPrevious, nCurrent ){ return nPrevious + nCurrent; }, 0 );
+	var nSum = calc.sum( pData.slice( 0, nPeriod ) );
 
 	var pSMA = [ nSum / nPeriod ],
 		i = Math.ceil( nPeriod / 2 ),
@@ -112,4 +116,29 @@ calc.simpleMovingAverage = function( pData, nPeriod )
 	}
 
 	return calc.padArray( pSMA, null, nPeriod / 2 );
+};
+
+
+
+calc.stochasticOscillator = function( pHigh, pLow, pClose, nPeriod )
+{
+
+	var nMaxLength = pClose.length - nPeriod, nHigh, nLow, pResult = [], i;
+
+	for( i = 0; i < pClose.length; i++ )
+	{
+		if( i > nPeriod && i < nMaxLength )
+		{
+			nHigh = Math.max.apply( Math, pHigh.slice( i - nPeriod, i + 1 ) );
+			nLow = Math.min.apply( Math, pLow.slice( i - nPeriod, i  + 1) );
+
+			pResult.push( 100 * ( ( pClose[ i ] - nLow ) / ( nHigh - nLow ) ) );
+		}
+		else
+		{
+			pResult.push( null );
+		}
+	}
+
+	return pResult;
 };
